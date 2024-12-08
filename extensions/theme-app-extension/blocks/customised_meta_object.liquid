@@ -1,0 +1,50 @@
+{% if product.metafields.custom.metafield_of_teams %}
+  {% assign teams = product.metafields.custom.metafield_of_teams.value %}
+  {% if teams %}
+    <div class="sports-team">
+      {% for team in teams %}
+          {% if team.url != blank %}
+            <a href="{{ team.url.value.url }}" target="_blank">
+          {% endif %}
+            <div class="team">
+              {% if team.name != blank %}
+                <h3>{{ team.name }}</h3>
+              {% endif %}
+              {% if team.image != blank %}
+                <img src="{{ team.image | img_url: 'original' }}" height="100" width="100" alt="{{ team.name }}">
+              {% endif %}
+            </div>
+          {% if team.url != blank %}
+            </a>
+          {% endif %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Teams information not available.</p>
+  {% endif %}
+  {% else %}
+  <p>No data found.</p>
+{% endif %}
+  
+{% schema %}
+{
+  "name": "Sports Team",
+  "target": "section",
+  "settings": []
+}
+{% endschema %}
+
+<style>
+  .sports-team {
+    display: flex;
+    gap: 10px;
+  }
+
+  .sports-team .team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid lightgray;
+    padding: 10px;
+  }
+</style>
